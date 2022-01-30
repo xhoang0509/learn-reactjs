@@ -4,33 +4,34 @@ import PropTypes from "prop-types";
 import TodoList from "./components/TodoList";
 
 TodoFeature.propTypes = {};
+const initTodoList = [
+    {
+        id: 1,
+        title: "Eat",
+        status: "new",
+    },
+    {
+        id: 2,
+        title: "Code",
+        status: "new",
+    },
+    {
+        id: 3,
+        title: "Sleep",
+        status: "completed",
+    },
+    {
+        id: 4,
+        title: "Do homework",
+        status: "new",
+    },
+];
 
 function TodoFeature(props) {
-    const initTodoList = [
-        {
-            id: 1,
-            title: "Eat",
-            status: "new",
-        },
-        {
-            id: 2,
-            title: "Code",
-            status: "new",
-        },
-        {
-            id: 3,
-            title: "Sleep",
-            status: "completed",
-        },
-        {
-            id: 4,
-            title: "Do homework",
-            status: "new",
-        },
-    ];
     const [todoList, setTodoList] = useState(initTodoList);
+    const [filteredSatte, setFilteredSatte] = useState("all");
+
     const handleTodoClick = (todo, index) => {
-        console.log(todo, index);
         // copy todolist to new one
         const newTodoList = [...todoList];
         // update status
@@ -41,10 +42,35 @@ function TodoFeature(props) {
         // set state todolist
         setTodoList(newTodoList);
     };
+
+    const handleShowAllClick = () => {
+        setFilteredSatte("all");
+    };
+    const handleShowCompletedClick = () => {
+        setFilteredSatte("completed");
+    };
+    const handleShowNewClick = () => {
+        setFilteredSatte("new");
+    };
+
+    const renderedTodoList = todoList.filter(
+        (todo) => filteredSatte === "all" || filteredSatte === todo.status
+    );
+
     return (
         <div>
             <h3>Todo List</h3>
-            <TodoList todoList={todoList} onTodoClick={handleTodoClick} />
+            <TodoList
+                todoList={renderedTodoList}
+                onTodoClick={handleTodoClick}
+            />
+            <div>
+                <button onClick={handleShowAllClick}>Show All</button>
+                <button onClick={handleShowCompletedClick}>
+                    Show Completed
+                </button>
+                <button onClick={handleShowNewClick}>Show New</button>
+            </div>
         </div>
     );
 }

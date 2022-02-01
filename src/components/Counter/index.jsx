@@ -10,6 +10,7 @@ function Counter(props) {
     };
     return (
         <div>
+            <h1>Counter</h1>
             {count}
             <button onClick={handleClick}>Increase</button>
         </div>

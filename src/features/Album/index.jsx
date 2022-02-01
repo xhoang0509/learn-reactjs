@@ -25,7 +25,7 @@ function AlbumFeature(props) {
     ];
     return (
         <div>
-            <h3>Có Thể Bạn Muốn Nghe</h3>
+            <h1>Có Thể Bạn Muốn Nghe</h1>
             <AlbumList albumList={albumList} />
         </div>
     );

@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
-
 import TodoList from "./components/TodoList";
 
 TodoFeature.propTypes = {};
@@ -26,6 +24,7 @@ const initTodoList = [
         status: "new",
     },
 ];
+
 
 function TodoFeature(props) {
     const [todoList, setTodoList] = useState(initTodoList);
@@ -59,7 +58,7 @@ function TodoFeature(props) {
 
     return (
         <div>
-            <h3>Todo List</h3>
+            <h1>Todo List - check jobs</h1>
             <TodoList
                 todoList={renderedTodoList}
                 onTodoClick={handleTodoClick}

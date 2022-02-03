@@ -4,6 +4,7 @@ import Pagination from "./components/Pagination";
 import PostList from "./components/PostList";
 import PostFilterForm from "./components/PostFilterForm";
 import Clock from "./components/Clock";
+import MagicBox from "./components/MagicBox";
 
 const App = () => {
     const [postList, setPostList] = useState([]);
@@ -51,6 +52,7 @@ const App = () => {
 
     return (
         <>
+            <MagicBox />
             {showClock && <Clock />}
             <button onClick={() => setShowClock(false)}>Hidden clock</button>
             <button onClick={() => setShowClock(true)}>Show clock</button>

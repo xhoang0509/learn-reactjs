@@ -3,6 +3,7 @@ import queryString from "query-string";
 import Pagination from "./components/Pagination";
 import PostList from "./components/PostList";
 import PostFilterForm from "./components/PostFilterForm";
+import Clock from "./components/Clock";
 
 const App = () => {
     const [postList, setPostList] = useState([]);
@@ -16,6 +17,7 @@ const App = () => {
         _page: 1,
         title_like: "",
     });
+    const [showClock, setShowClock] = useState(true);
     useEffect(() => {
         const fetchPostList = async () => {
             try {
@@ -46,8 +48,12 @@ const App = () => {
             title_like: newFilters.searchTerm,
         });
     };
+
     return (
         <>
+            {showClock && <Clock />}
+            <button onClick={() => setShowClock(false)}>Hidden clock</button>
+            <button onClick={() => setShowClock(true)}>Show clock</button>
             <PostFilterForm onSubmit={handleFiltersChange} />
             <PostList posts={postList} />
             <Pagination

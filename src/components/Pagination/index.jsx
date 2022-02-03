@@ -8,19 +8,20 @@ Pagination.propTypes = {
 Pagination.defaultProps = {
     onPageChange: null,
 };
+
 function Pagination(props) {
     const { pagination, onPageChange } = props;
     const { _page, _limit, _totalRows } = pagination;
     const totalPages = Math.ceil(_totalRows / _limit);
-
     const handlePageChange = (newPage) => {
         if (onPageChange) {
             onPageChange(newPage);
         }
     };
-
     return (
         <>
+            Current page: {_page}
+            <br />
             <button
                 disabled={_page <= 1}
                 onClick={() => handlePageChange(_page - 1)}

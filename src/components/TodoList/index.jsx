@@ -20,7 +20,7 @@ function TodoList(props) {
     };
     return (
         <>
-            <h1>Todo List - remove jobs</h1>
+            <h1>Todo List - click to remove job</h1>
             <ul>
                 {todos.map((todo, index) => (
                     <li key={todo.id} onClick={() => handleClick(index)}>

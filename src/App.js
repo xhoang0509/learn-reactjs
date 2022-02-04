@@ -1,4 +1,6 @@
+import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
+import productApi from './api/productApi';
 import Header from './components/Header';
 import Home from './components/Home';
 import NotFound from './components/NotFound';
@@ -7,6 +9,16 @@ import Todo from './features/Todo';
 import TodoDetail from './features/Todo/pages/TodoDetail';
 
 const App = () => {
+    useEffect(() => {
+        const fetchProducts = async () => {
+            const params = {
+                _limit: 10,
+            };
+            const productList = await productApi.getAll(params);
+            console.log(productList);
+        };
+        fetchProducts();
+    }, []);
     return (
         <div>
             <Header />

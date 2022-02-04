@@ -34,7 +34,6 @@ function TodoFeature() {
     let navigate = useNavigate();
     const [filteredStatus, setFilteredStatus] = useState(() => {
         const params = queryString.parse(location.search);
-        console.log(params.status);
         return params.status || 'all';
     });
     useEffect(() => {

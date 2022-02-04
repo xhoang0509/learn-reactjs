@@ -1,10 +1,10 @@
-import { Route, Routes, Navigate } from "react-router-dom";
-import Header from "./components/Header";
-import Home from "./components/Home";
-import NotFound from "./components/NotFound";
-import Album from "./features/Album";
-import Todo from "./features/Todo";
-import TodoDetail from "./features/Todo/pages/TodoDetail";
+import { Route, Routes } from 'react-router-dom';
+import Header from './components/Header';
+import Home from './components/Home';
+import NotFound from './components/NotFound';
+import Album from './features/Album';
+import Todo from './features/Todo';
+import TodoDetail from './features/Todo/pages/TodoDetail';
 
 const App = () => {
     return (

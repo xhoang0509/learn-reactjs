@@ -1,9 +1,23 @@
 import React from "react";
-import "./styles.scss";
-Header.propTypes = {};
+import { NavLink } from "react-router-dom";
+import "./Header.scss";
 
-function Header(props) {
-    return <div>Header</div>;
+function Header() {
+    return (
+        <div>
+            <ul>
+                <li>
+                    <NavLink to="/">Home</NavLink>
+                </li>
+                <li>
+                    <NavLink to="/todo">Todo</NavLink>
+                </li>
+                <li>
+                    <NavLink to="/album">Album</NavLink>
+                </li>
+            </ul>
+        </div>
+    );
 }
 
 export default Header;

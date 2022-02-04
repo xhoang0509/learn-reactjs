@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import queryString from "query-string";
+import React, { useEffect, useMemo, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import TodoList from "./components/TodoList";
 
 TodoFeature.propTypes = {};
@@ -25,10 +27,20 @@ const initTodoList = [
     },
 ];
 
-
-function TodoFeature(props) {
+function TodoFeature() {
     const [todoList, setTodoList] = useState(initTodoList);
-    const [filteredSatte, setFilteredSatte] = useState("all");
+
+    const location = useLocation();
+    let navigate = useNavigate();
+    const [filteredStatus, setFilteredStatus] = useState(() => {
+        const params = queryString.parse(location.search);
+        console.log(params.status);
+        return params.status || "all";
+    });
+    useEffect(() => {
+        const params = queryString.parse(location.search);
+        setFilteredStatus(params.status || "all");
+    }, [location.search]);
 
     const handleTodoClick = (todo, index) => {
         // copy todolist to new one
@@ -43,18 +55,29 @@ function TodoFeature(props) {
     };
 
     const handleShowAllClick = () => {
-        setFilteredSatte("all");
+        const queryParams = { status: "all" };
+        navigate({
+            search: queryString.stringify(queryParams),
+        });
     };
     const handleShowCompletedClick = () => {
-        setFilteredSatte("completed");
+        const queryParams = { status: "completed" };
+        navigate({
+            search: queryString.stringify(queryParams),
+        });
     };
     const handleShowNewClick = () => {
-        setFilteredSatte("new");
+        const queryParams = { status: "new" };
+        navigate({
+            search: queryString.stringify(queryParams),
+        });
     };
 
-    const renderedTodoList = todoList.filter(
-        (todo) => filteredSatte === "all" || filteredSatte === todo.status
-    );
+    const renderedTodoList = useMemo(() => {
+        return todoList.filter(
+            (todo) => filteredStatus === "all" || filteredStatus === todo.status
+        );
+    }, [todoList, filteredStatus]);
 
     return (
         <div>

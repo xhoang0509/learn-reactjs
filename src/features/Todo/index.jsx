@@ -2,6 +2,7 @@ import queryString from 'query-string';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import TodoList from './components/TodoList';
+import TodoForm from './pages/TodoForm';
 
 TodoFeature.propTypes = {};
 const initTodoList = [
@@ -77,10 +78,14 @@ function TodoFeature() {
             (todo) => filteredStatus === 'all' || filteredStatus === todo.status
         );
     }, [todoList, filteredStatus]);
-
+    
+    const handleTodoFormSubmit = (values) => {
+        console.log('Form submit: ', values);
+    }
     return (
         <div>
             <h1>Todo List - check jobs</h1>
+            <TodoForm onSubmit={handleTodoFormSubmit}/>
             <TodoList
                 todoList={renderedTodoList}
                 onTodoClick={handleTodoClick}

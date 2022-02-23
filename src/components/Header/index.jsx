@@ -13,6 +13,9 @@ function Header() {
                     <NavLink to="/todo">Todo</NavLink>
                 </li>
                 <li>
+                    <NavLink to="/product">Product</NavLink>
+                </li>
+                <li>
                     <NavLink to="/album">Album</NavLink>
                 </li>
             </ul>

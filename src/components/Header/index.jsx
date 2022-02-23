@@ -5,10 +5,10 @@ import Button from '@mui/material/Button';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
-import { NavLink } from 'react-router-dom';
-import './Header.scss';
+import { Link, NavLink } from 'react-router-dom';
+import styles from './Header.module.css';
 
-export default function ButtonAppBar() {
+export default function Header() {
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
@@ -26,19 +26,21 @@ export default function ButtonAppBar() {
                         component="div"
                         sx={{ flexGrow: 1 }}
                     >
-                        <NavLink to="/">ABC SHOP</NavLink>
+                        <Link className={styles.link} to="/">
+                            ABC SHOP
+                        </Link>
                     </Typography>
 
-                    <NavLink to="/todo">
+                    <NavLink className={styles.link} to="/todo">
                         <Button color="inherit">Todos</Button>
                     </NavLink>
-                    <NavLink to="/album">
+                    <NavLink className={styles.link} to="/album">
                         <Button color="inherit">Album</Button>
                     </NavLink>
-                    <NavLink to="/counter">
+                    <NavLink className={styles.link} to="/counter">
                         <Button color="inherit">Counter</Button>
                     </NavLink>
-                    <NavLink to="/product">
+                    <NavLink className={styles.link} to="/product">
                         <Button color="inherit">Product</Button>
                     </NavLink>
 

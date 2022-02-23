@@ -1,9 +1,10 @@
 .album {
     &__thumbnail {
-        & > img {
-            width: 190px;
-            border-radius: 4px;
-        }
+    }
+
+    &__image {
+        width: 190px;
+        border-radius: 4px;
     }
 
     &__name {

@@ -2,26 +2,28 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import './Header.scss';
 
+import { List, Item } from './Styled';
+
 function Header() {
     return (
         <div>
-            <ul>
-                <li>
+            <List>
+                <Item>
                     <NavLink to="/">Home</NavLink>
-                </li>
-                <li>
+                </Item>
+                <Item>
                     <NavLink to="/todo">Todo</NavLink>
-                </li>
-                <li>
+                </Item>
+                <Item>
                     <NavLink to="/product">Product</NavLink>
-                </li>
-                <li>
+                </Item>
+                <Item>
                     <NavLink to="/album">Album</NavLink>
-                </li>
-                <li>
+                </Item>
+                <Item>
                     <NavLink to="/counter">Counter</NavLink>
-                </li>
-            </ul>
+                </Item>
+            </List>
         </div>
     );
 }

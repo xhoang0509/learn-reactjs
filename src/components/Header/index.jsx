@@ -18,6 +18,9 @@ function Header() {
                 <li>
                     <NavLink to="/album">Album</NavLink>
                 </li>
+                <li>
+                    <NavLink to="/counter">Counter</NavLink>
+                </li>
             </ul>
         </div>
     );

@@ -6,6 +6,7 @@ import Home from './components/Home';
 import NotFound from './components/NotFound';
 import Product from './components/Product';
 import Album from './features/Album';
+import Counter from './features/Counter';
 import Todo from './features/Todo';
 import TodoDetail from './features/Todo/pages/TodoDetail';
 const App = () => {
@@ -27,6 +28,7 @@ const App = () => {
                 <Route path="/todo" element={<Todo />} />
                 <Route path="/todo/:todoId" element={<TodoDetail />} />
                 <Route path="/album" element={<Album />} />
+                <Route path="/counter" element={<Counter />} />
                 <Route
                     path="/product"
                     element={<Product products={productList} />}

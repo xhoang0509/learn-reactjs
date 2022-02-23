@@ -9,6 +9,7 @@ import Album from './features/Album';
 import Counter from './features/Counter';
 import Todo from './features/Todo';
 import TodoDetail from './features/Todo/pages/TodoDetail';
+
 const App = () => {
     const [productList, setProductList] = useState([]);
     useEffect(() => {

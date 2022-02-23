@@ -1,6 +1,6 @@
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
-import { increase, decrease } from './counterSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { decrease, increase } from './counterSlice';
+import styles from './styles.module.css';
 
 const Counter = () => {
     const counter = useSelector((state) => state.counter);
@@ -15,7 +15,7 @@ const Counter = () => {
         dispatch(action);
     };
     return (
-        <div>
+        <div className={styles.counter}>
             Counter: {counter}
             <div>
                 <button onClick={handleIncreaseClick}>Increase</button>

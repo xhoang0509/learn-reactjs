@@ -9,6 +9,7 @@ import Album from './features/Album';
 import Counter from './features/Counter';
 import Todo from './features/Todo';
 import TodoDetail from './features/Todo/pages/TodoDetail';
+import './App.scss';
 
 const App = () => {
     const [productList, setProductList] = useState([]);
@@ -24,18 +25,20 @@ const App = () => {
         <div>
             <Header />
 
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/todo" element={<Todo />} />
-                <Route path="/todo/:todoId" element={<TodoDetail />} />
-                <Route path="/album" element={<Album />} />
-                <Route path="/counter" element={<Counter />} />
-                <Route
-                    path="/product"
-                    element={<Product products={productList} />}
-                />
-                <Route path="*" element={<NotFound />} />
-            </Routes>
+            <div className="container">
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/todo" element={<Todo />} />
+                    <Route path="/todo/:todoId" element={<TodoDetail />} />
+                    <Route path="/album" element={<Album />} />
+                    <Route path="/counter" element={<Counter />} />
+                    <Route
+                        path="/product"
+                        element={<Product products={productList} />}
+                    />
+                    <Route path="*" element={<NotFound />} />
+                </Routes>
+            </div>
         </div>
     );
 };

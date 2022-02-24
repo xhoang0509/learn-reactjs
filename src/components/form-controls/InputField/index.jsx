@@ -1,7 +1,7 @@
 import { TextField } from '@mui/material';
-import { Controller } from 'react-hook-form';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Controller } from 'react-hook-form';
 
 InputField.propTypes = {
     form: PropTypes.object.isRequired,
@@ -13,7 +13,7 @@ InputField.propTypes = {
 
 function InputField(props) {
     const { form, name, label, disabled } = props;
-    
+
     return (
         <Controller
             name={name}
@@ -21,6 +21,7 @@ function InputField(props) {
             render={({ field }) => {
                 return (
                     <TextField
+                        margin="normal"
                         {...field}
                         fullWidth
                         label={label}

@@ -1,35 +1,16 @@
 import queryString from 'query-string';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import uuid from 'react-uuid';
 import TodoList from './components/TodoList';
 import TodoForm from './pages/TodoForm';
 
+
 TodoFeature.propTypes = {};
-const initTodoList = [
-    {
-        id: 1,
-        title: 'Eat',
-        status: 'new',
-    },
-    {
-        id: 2,
-        title: 'Code',
-        status: 'new',
-    },
-    {
-        id: 3,
-        title: 'Sleep',
-        status: 'completed',
-    },
-    {
-        id: 4,
-        title: 'Do homework',
-        status: 'new',
-    },
-];
+const initTodoList = JSON.parse(localStorage.getItem('todo-list')) || [];
 
 function TodoFeature() {
-    const [todoList, setTodoList] = useState(initTodoList);
+    const [todoList, setTodoList] = useState(() => initTodoList);
 
     const location = useLocation();
     let navigate = useNavigate();
@@ -78,25 +59,41 @@ function TodoFeature() {
             (todo) => filteredStatus === 'all' || filteredStatus === todo.status
         );
     }, [todoList, filteredStatus]);
-    
+
     const handleTodoFormSubmit = (values) => {
-        console.log('Form submit: ', values);
-    }
+        const newTodo = {
+            id: uuid(),
+            status: 'new',
+            ...values,
+        };
+        const newTodoList = [...todoList];
+        newTodoList.push(newTodo);
+        setTodoList(newTodoList);
+    };
+
+    useEffect(() => {
+        localStorage.setItem('todo-list', JSON.stringify(todoList));
+    }, [todoList]);
+
     return (
-        <div>
+        <div >
             <h1>Todo List - check jobs</h1>
-            <TodoForm onSubmit={handleTodoFormSubmit}/>
+            <TodoForm onSubmit={handleTodoFormSubmit} />
             <TodoList
                 todoList={renderedTodoList}
                 onTodoClick={handleTodoClick}
             />
-            <div>
-                <button onClick={handleShowAllClick}>Show All</button>
-                <button onClick={handleShowCompletedClick}>
-                    Show Completed
-                </button>
-                <button onClick={handleShowNewClick}>Show New</button>
-            </div>
+            {todoList.length === 0 ? (
+                <h1>Empty todo</h1>
+            ) : (
+                <div>
+                    <button onClick={handleShowAllClick}>Show All</button>
+                    <button onClick={handleShowCompletedClick}>
+                        Show Completed
+                    </button>
+                    <button onClick={handleShowNewClick}>Show New</button>
+                </div>
+            )}
         </div>
     );
 }

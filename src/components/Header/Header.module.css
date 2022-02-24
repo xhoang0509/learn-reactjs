@@ -3,7 +3,7 @@
     color: #fff;
 }
 
-.link.active {
+.active {
     color: red;
     cursor: default;
 }

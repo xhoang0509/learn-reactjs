@@ -1,3 +1,4 @@
+import { yupResolver } from '@hookform/resolvers/yup';
 import { LockOutlined } from '@mui/icons-material';
 import { Avatar, Button, Typography } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
@@ -8,7 +9,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
 
 const useStyles = makeStyles(() => {
     const theme = createTheme();
@@ -40,13 +40,26 @@ RegisterForm.propTypes = {
 RegisterForm.defaultProps = {
     onSubmit: null,
 };
-
+const schema = yup.object().shape({
+    fullName: yup
+        .string()
+        .required('Please enter your full name.')
+        .test(
+            'should has at least two words',
+            'Please enter at least two words',
+            (value) => {
+                value = value.trim();
+                return value.split(' ').length >= 2;
+            }
+        ),
+    email: yup
+        .string()
+        .required('Please enter your email')
+        .email('Please enter a valid email address'),
+});
 function RegisterForm(props) {
     const classes = useStyles();
 
-    const schema = yup.object().shape({
-        fullName: yup.string().required('Please enter your full name !'),
-    });
     const form = useForm({
         defaultValues: {
             fullName: '',
@@ -57,14 +70,18 @@ function RegisterForm(props) {
         resolver: yupResolver(schema),
     });
 
-    const handleSubmit = (values) => {
+    const formSubmit = (values) => {
         const { onSubmit } = props;
         if (onSubmit) {
             onSubmit(values);
-            form.reset();
+            form.reset({
+                fullName: '',
+                email: '',
+                password: '',
+                retypePassword: '',
+            });
         }
     };
-
     return (
         <div>
             <Avatar className={classes.avatar}>
@@ -75,13 +92,13 @@ function RegisterForm(props) {
                 Create An Account
             </Typography>
 
-            <form onSubmit={form.handleSubmit(handleSubmit)}>
-                <InputField name="fullName" label="Full name" form={form} />
-                <InputField name="email" label="Email" form={form} />
-                <PasswordField name="password" label="Password" form={form} />
+            <form onSubmit={form.handleSubmit(formSubmit)}>
+                <InputField label="Full name" name="fullName" form={form} />
+                <InputField label="Email" name="email" form={form} />
+                <PasswordField label="Password" name="password" form={form} />
                 <PasswordField
-                    name="retypePassword"
                     label="Retype password"
+                    name="retypePassword"
                     form={form}
                 />
                 <Button

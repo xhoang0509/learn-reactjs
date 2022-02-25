@@ -13,7 +13,10 @@ InputField.propTypes = {
 
 function InputField(props) {
     const { form, name, label, disabled } = props;
-
+    const {
+        formState: { errors },
+    } = form;
+    const hasError = errors[name];
     return (
         <Controller
             name={name}
@@ -26,6 +29,8 @@ function InputField(props) {
                         fullWidth
                         label={label}
                         disabled={disabled}
+                        error={!!hasError}
+                        helperText={errors[name]?.message}
                     />
                 );
             }}

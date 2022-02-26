@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LockOutlined } from '@mui/icons-material';
-import { Avatar, Button, Typography } from '@mui/material';
+import { Avatar, Button, Typography, LinearProgress } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import { makeStyles } from '@mui/styles';
 import InputField from 'components/form-controls/InputField';
@@ -14,6 +14,7 @@ const useStyles = makeStyles(() => {
     const theme = createTheme();
     return {
         root: {
+            position: 'relative',
             paddingTop: theme.spacing(4),
         },
 
@@ -23,12 +24,19 @@ const useStyles = makeStyles(() => {
         },
 
         title: {
-            margin: theme.spacing(2, 0, 3, 0),
+            margin: theme.spacing(2, 0, 2, 0),
             textAlign: 'center',
         },
 
         submit: {
             margin: theme.spacing(3, 0, 2, 0),
+        },
+
+        progress: {
+            position: 'absolute',
+            top: theme.spacing(1.5),
+            left: 0,
+            right: 0,
         },
     };
 });
@@ -78,10 +86,10 @@ function RegisterForm(props) {
         resolver: yupResolver(schema),
     });
 
-    const formSubmit = (values) => {
+    const formSubmit = async (values) => {
         const { onSubmit } = props;
         if (onSubmit) {
-            onSubmit(values);
+            await onSubmit(values);
             form.reset({
                 fullName: '',
                 email: '',
@@ -90,10 +98,12 @@ function RegisterForm(props) {
             });
         }
     };
+    const { isSubmitting } = form.formState;
     return (
         <div>
+            {isSubmitting && <LinearProgress className={classes.progress} />}
             <Avatar className={classes.avatar}>
-                <LockOutlined></LockOutlined>
+                <LockOutlined />
             </Avatar>
 
             <Typography className={classes.title} component="h3" variant="h5">
@@ -110,6 +120,7 @@ function RegisterForm(props) {
                     form={form}
                 />
                 <Button
+                    disabled={isSubmitting}
                     type="submit"
                     className={classes.submit}
                     variant="contained"

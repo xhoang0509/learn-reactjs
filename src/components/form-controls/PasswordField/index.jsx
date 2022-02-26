@@ -1,5 +1,6 @@
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { FormHelperText } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -8,7 +9,6 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { Controller } from 'react-hook-form';
-
 
 PasswordField.propTypes = {
     form: PropTypes.object.isRequired,
@@ -20,13 +20,21 @@ PasswordField.propTypes = {
 
 function PasswordField(props) {
     const { form, name, label, disabled } = props;
-
+    const {
+        formState: { errors },
+    } = form;
+    const hasError = !!errors[name];
     const [showPassword, setShowPassword] = useState(false);
     const toggleShowPassword = () => {
         setShowPassword((x) => !x);
     };
     return (
-        <FormControl margin="normal" fullWidth variant="outlined">
+        <FormControl
+            error={hasError}
+            margin="normal"
+            fullWidth
+            variant="outlined"
+        >
             <InputLabel htmlFor={name}>{label}</InputLabel>
             <Controller
                 name={name}
@@ -59,6 +67,7 @@ function PasswordField(props) {
                     );
                 }}
             />
+            <FormHelperText>{errors[name]?.message}</FormHelperText>
         </FormControl>
     );
 }

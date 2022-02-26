@@ -56,6 +56,14 @@ const schema = yup.object().shape({
         .string()
         .required('Please enter your email')
         .email('Please enter a valid email address'),
+    password: yup
+        .string()
+        .required('Please enter your passsword')
+        .min(6, 'Please enter at least 6 characters'),
+    retypePassword: yup
+        .string()
+        .required('Please retype your password')
+        .oneOf([yup.ref('password')], 'Password does not match'),
 });
 function RegisterForm(props) {
     const classes = useStyles();

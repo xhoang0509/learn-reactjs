@@ -1,5 +1,3 @@
-import { Button } from '@mui/material';
-import { useSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import productApi from './api/productApi';
@@ -14,7 +12,7 @@ import Todo from './features/Todo';
 import TodoDetail from './features/Todo/pages/TodoDetail';
 
 const App = () => {
-    const { enqueueSnackbar } = useSnackbar();
+    
     const [productList, setProductList] = useState([]);
     useEffect(() => {
         const fetchProducts = async () => {
@@ -25,14 +23,9 @@ const App = () => {
         fetchProducts();
     }, []);
 
-    const showNoti = () => {
-        enqueueSnackbar('Register successfully', { variant: 'success' });
-    };
     return (
         <div>
             <Header />
-
-            <Button onClick={showNoti}>Show noti</Button>
 
             <div className="container">
                 <Routes>
@@ -41,10 +34,7 @@ const App = () => {
                     <Route path="/todo/:todoId" element={<TodoDetail />} />
                     <Route path="/album" element={<Album />} />
                     <Route path="/counter" element={<Counter />} />
-                    <Route
-                        path="/product"
-                        element={<Product products={productList} />}
-                    />
+                    <Route path="/product" element={<Product products={productList} />} />
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             </div>

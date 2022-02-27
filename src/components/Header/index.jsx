@@ -1,4 +1,5 @@
 import { Close } from '@mui/icons-material';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ShopIcon from '@mui/icons-material/Shop';
 import { IconButton } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
@@ -6,23 +7,23 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import { createTheme } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { makeStyles } from '@mui/styles';
 import Login from 'features/Auth/components/Login';
 import Register from 'features/Auth/components/Register';
+import { logout } from 'features/Auth/userSlice';
 import * as React from 'react';
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
 
 const useStyles = makeStyles(() => {
     const theme = createTheme();
     return {
-        root: {
-            position: 'relative',
-            paddingTop: theme.spacing(4),
-        },
         link: {
             textDecoration: 'none',
             color: '#fff',
@@ -50,15 +51,36 @@ const MODE = {
 
 const Header = () => {
     const classes = useStyles();
+    const dispatch = useDispatch();
+
+    const loggedInUser = useSelector((state) => state.user.current);
+    const fullNameUser = loggedInUser.fullName;
+
+    const isLoggedIn = !!loggedInUser.id;
     const [open, setOpen] = useState(false);
     const [mode, setMode] = useState(MODE.LOGIN);
+    const [anchorEl, setAnchorEl] = useState(null);
+    const openMenu = Boolean(anchorEl);
 
-    const handleClickOpen = () => {
+    const handleClickOpenDialog = () => {
         setOpen(true);
     };
 
     const handleClose = () => {
         setOpen(false);
+    };
+
+    const handleMenuClick = (e) => {
+        setAnchorEl(e.currentTarget);
+    };
+    const handleCloseMenu = () => {
+        setAnchorEl(null);
+    };
+
+    const handleUserLogout = () => {
+        const action = logout();
+        dispatch(action);
+        handleCloseMenu();
     };
     return (
         <div>
@@ -73,11 +95,7 @@ const Header = () => {
                             sx={{ mr: 2 }}
                         />
 
-                        <Typography
-                            variant="h6"
-                            component="div"
-                            sx={{ flexGrow: 1 }}
-                        >
+                        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                             <Link className={classes.link} to="/">
                                 ABC SHOP
                             </Link>
@@ -95,12 +113,41 @@ const Header = () => {
                         <NavLink className={classes.link} to="/product">
                             <Button color="inherit">Product</Button>
                         </NavLink>
-
-                        <Button color="inherit" onClick={handleClickOpen}>
-                            Login/Register
-                        </Button>
+                        {!isLoggedIn && (
+                            <Button color="inherit" onClick={handleClickOpenDialog}>
+                                Login
+                            </Button>
+                        )}
+                        {isLoggedIn && (
+                            <IconButton
+                                color="inherit"
+                                onClick={handleMenuClick}
+                                aria-haspopup="true"
+                            >
+                                <AccountCircleIcon />
+                            </IconButton>
+                        )}
                     </Toolbar>
                 </AppBar>
+                <Menu
+                    anchorEl={anchorEl}
+                    open={openMenu}
+                    onClose={handleCloseMenu}
+                    MenuListProps={{
+                        'aria-labelledby': 'basic-button',
+                    }}
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'left',
+                    }}
+                    transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'left',
+                    }}
+                >
+                    <MenuItem onClick={handleCloseMenu}>Hi, {fullNameUser}</MenuItem>
+                    <MenuItem onClick={handleUserLogout}>Logout</MenuItem>
+                </Menu>
             </Box>
 
             <Dialog
@@ -110,24 +157,15 @@ const Header = () => {
                 onClose={handleClose}
                 className={classes.diaLogRoot}
             >
-                <IconButton
-                    className={classes.closeButton}
-                    onClick={handleClose}
-                >
+                <IconButton className={classes.closeButton} onClick={handleClose}>
                     <Close />
                 </IconButton>
                 <DialogContent>
                     {mode === MODE.REGISTER && (
                         <>
                             <Register closeDialog={handleClose} />
-                            <Box
-                                className={classes.toggleBox}
-                                textAlign="center"
-                            >
-                                <Button
-                                    color="primary"
-                                    onClick={() => setMode(MODE.LOGIN)}
-                                >
+                            <Box className={classes.toggleBox} textAlign="center">
+                                <Button color="primary" onClick={() => setMode(MODE.LOGIN)}>
                                     Already have an account. Login here
                                 </Button>
                             </Box>
@@ -137,14 +175,8 @@ const Header = () => {
                         <>
                             <Login closeDialog={handleClose} />
 
-                            <Box
-                                className={classes.toggleBox}
-                                textAlign="center"
-                            >
-                                <Button
-                                    color="primary"
-                                    onClick={() => setMode(MODE.REGISTER)}
-                                >
+                            <Box className={classes.toggleBox} textAlign="center">
+                                <Button color="primary" onClick={() => setMode(MODE.REGISTER)}>
                                     Don't have an account. Register here
                                 </Button>
                             </Box>

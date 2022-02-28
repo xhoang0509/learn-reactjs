@@ -4,7 +4,7 @@ import categoryApi from 'api/categoryApi';
 import { Box, createTheme, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 
-ProductByCategories.propTypes = {
+FilterByCategories.propTypes = {
     onChange: PropTypes.func,
 };
 
@@ -29,7 +29,7 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-function ProductByCategories({ onChange }) {
+function FilterByCategories({ onChange }) {
     const classes = useStyles();
     const [categoriesList, setCategoriesList] = useState([]);
     useEffect(() => {
@@ -56,7 +56,11 @@ function ProductByCategories({ onChange }) {
         <Box className={classes.root}>
             <Typography variant="subtitle2">DANH MỤC SẢN PHẨM</Typography>
             <ul className={classes.menu}>
-                <Typography className={classes.item} variant="body2" onClick={handleCategoryClickAll}>
+                <Typography
+                    className={classes.item}
+                    variant="body2"
+                    onClick={handleCategoryClickAll}
+                >
                     Tất cả sản phẩm
                 </Typography>
                 {categoriesList.map((category) => (
@@ -73,4 +77,4 @@ function ProductByCategories({ onChange }) {
     );
 }
 
-export default ProductByCategories;
+export default FilterByCategories;

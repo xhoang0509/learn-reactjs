@@ -4,7 +4,7 @@ import { Box } from '@mui/system';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import NumberFormat from 'react-number-format';
-ProductByPrice.propTypes = {
+FilterByPrice.propTypes = {
     onChange: PropTypes.func,
 };
 
@@ -53,7 +53,7 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-function ProductByPrice({ onChange }) {
+function FilterByPrice({ onChange }) {
     const classes = useStyles();
     const [values, setValues] = useState({
         salePrice_gte: 0,
@@ -125,4 +125,4 @@ function ProductByPrice({ onChange }) {
     );
 }
 
-export default ProductByPrice;
+export default FilterByPrice;

@@ -1,15 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Box } from '@mui/system';
-import ProductByCategories from './Filters/ProductByCategories';
-import ProductByPrice from './Filters/ProductByPrice';
+import FilterByCategories from './Filters/FilterByCategories';
+import FilterByPrice from './Filters/FilterByPrice';
+import FilterByService from './Filters/FilterByService';
 
 ProductFilters.propTypes = {
     filters: PropTypes.object,
     onChange: PropTypes.func,
 };
 
-function ProductFilters({ onChange }) {
+function ProductFilters({ filters, onChange }) {
     const handleCategoryChange = (newCategoryId) => {
         if (!onChange) return;
 
@@ -18,15 +19,16 @@ function ProductFilters({ onChange }) {
         };
         onChange(newFilters);
     };
-    const handlePriceChange = (values) => {
+    const handleChange = (values) => {
         if (onChange) {
             onChange(values);
         }
     };
     return (
         <Box>
-            <ProductByCategories onChange={handleCategoryChange} />
-            <ProductByPrice onChange={handlePriceChange} />
+            <FilterByCategories onChange={handleCategoryChange} />
+            <FilterByPrice onChange={handleChange} />
+            <FilterByService filters={filters} onChange={handleChange} />
         </Box>
     );
 }

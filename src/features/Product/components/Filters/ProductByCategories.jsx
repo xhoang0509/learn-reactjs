@@ -18,13 +18,13 @@ const useStyles = makeStyles(() => ({
         padding: 0,
         margin: 0,
         listStyleType: 'none',
+    },
 
-        '& > li': {
-            paddingTop: theme.spacing(1),
-            '&:hover': {
-                cursor: 'pointer',
-                color: theme.palette.primary.dark,
-            },
+    item: {
+        paddingTop: theme.spacing(1),
+        '&:hover': {
+            cursor: 'pointer',
+            color: theme.palette.primary.dark,
         },
     },
 }));
@@ -38,6 +38,7 @@ function ProductByCategories({ onChange }) {
                 const response = await categoryApi.getAll();
                 const newResponse = response.map((x) => ({ id: x.id, name: x.name }));
                 setCategoriesList(newResponse);
+                console.log(newResponse);
             } catch (error) {
                 console.log('Failed to fetch category', error);
             }
@@ -47,12 +48,23 @@ function ProductByCategories({ onChange }) {
     const handleCategoryClick = (category) => {
         if (onChange) onChange(category.id);
     };
+
+    const handleCategoryClickAll = (category) => {
+        if (onChange) onChange(null);
+    };
     return (
         <Box className={classes.root}>
             <Typography variant="subtitle2">DANH MỤC SẢN PHẨM</Typography>
             <ul className={classes.menu}>
+                <Typography className={classes.item} variant="body2" onClick={handleCategoryClickAll}>
+                    Tất cả sản phẩm
+                </Typography>
                 {categoriesList.map((category) => (
-                    <li key={category.id} onClick={() => handleCategoryClick(category)}>
+                    <li
+                        className={classes.item}
+                        key={category.id}
+                        onClick={() => handleCategoryClick(category)}
+                    >
                         <Typography variant="body2">{category.name}</Typography>
                     </li>
                 ))}

@@ -16,7 +16,7 @@ function ProductSkeleton({ length }) {
         <Box>
             <Grid container>
                 {Array.from(new Array(length)).map((x, index) => (
-                    <Grid item key={index} xs={12} md={6} lg={3} padding={1}>
+                    <Grid item key={index} xs={12} md={6} lg={4} padding={1}>
                         <Skeleton variant="rectangular" width="100%" height={118} />
                         <Skeleton />
                         <Skeleton width="60%" />

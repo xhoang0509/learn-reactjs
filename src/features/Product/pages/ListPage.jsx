@@ -1,5 +1,4 @@
-import { Container, Grid, Paper } from '@mui/material';
-import { createTheme } from '@mui/material/styles';
+import { Container, Grid, Pagination, Paper } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { Box } from '@mui/system';
 import productApi from 'api/productApi';
@@ -9,7 +8,6 @@ import ProductSkeleton from '../components/ProductSkeleton';
 
 ListPage.propTypes = {};
 const useStyle = makeStyles(() => {
-    const theme = createTheme();
     return {
         root: {},
         left: {
@@ -18,25 +16,43 @@ const useStyle = makeStyles(() => {
         right: {
             flex: '1 1 0',
         },
+        pagination: {
+            display: 'flex',
+            flexFlow: 'row nowrap',
+            justifyContent: 'center',
+            marginTop: '30px',
+            paddingBottom: '20px',
+        },
     };
 });
 function ListPage(props) {
     const classes = useStyle();
 
     const [productList, setProductList] = useState([]);
+    const [pagination, setPagination] = useState({
+        limit: 10,
+        page: 1,
+        total: 120,
+    });
     const [loading, setLoading] = useState(true);
+    const [filters, setFilters] = useState({ _page: 1, _limit: 9 });
 
     useEffect(() => {
         (async () => {
             try {
-                const { data } = await productApi.getAll({ _page: 8, _limit: 12 });
+                const { data, pagination } = await productApi.getAll(filters);
                 setProductList(data);
+                setPagination(pagination);
             } catch (error) {
                 console.log('Failed to fetch product list: ', error);
             }
             setLoading(false);
         })();
-    }, []);
+    }, [filters]);
+
+    const handlePageChange = (e, page) => {
+        setFilters((prevFilters) => ({ ...prevFilters, _page: page }));
+    };
 
     return (
         <Box>
@@ -47,7 +63,20 @@ function ListPage(props) {
                     </Grid>
                     <Grid item className={classes.right}>
                         <Paper elevation={0}>
-                            {loading ? <ProductSkeleton /> : <ProductList data={productList} />}
+                            {loading ? (
+                                <ProductSkeleton length={9} />
+                            ) : (
+                                <ProductList data={productList} />
+                            )}
+                            <Box className={classes.pagination}>
+                                <Pagination
+                                    textAlgin="center"
+                                    count={Math.ceil(pagination.total / pagination.limit)}
+                                    page={pagination.page}
+                                    onChange={handlePageChange}
+                                    color="primary"
+                                />
+                            </Box>
                         </Paper>
                     </Grid>
                 </Grid>

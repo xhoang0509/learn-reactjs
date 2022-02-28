@@ -18,13 +18,14 @@ const useStyles = makeStyles(() => ({
         padding: 0,
         margin: 0,
         listStyleType: 'none',
-    },
 
-    item: {
-        paddingTop: theme.spacing(1),
-        '&:hover': {
-            cursor: 'pointer',
-            color: theme.palette.primary.dark,
+        '& > li': {
+            paddingTop: theme.spacing(1),
+
+            '&:hover': {
+                cursor: 'pointer',
+                color: theme.palette.primary.dark,
+            },
         },
     },
 }));
@@ -38,7 +39,6 @@ function FilterByCategories({ onChange }) {
                 const response = await categoryApi.getAll();
                 const newResponse = response.map((x) => ({ id: x.id, name: x.name }));
                 setCategoriesList(newResponse);
-                console.log(newResponse);
             } catch (error) {
                 console.log('Failed to fetch category', error);
             }
@@ -46,23 +46,16 @@ function FilterByCategories({ onChange }) {
     }, []);
 
     const handleCategoryClick = (category) => {
-        if (onChange) onChange(category.id);
-    };
-
-    const handleCategoryClickAll = (category) => {
-        if (onChange) onChange(null);
+        const newFilterCategory = {
+            id: category.id,
+            name: category.name,
+        };
+        if (onChange) onChange(newFilterCategory);
     };
     return (
         <Box className={classes.root}>
             <Typography variant="subtitle2">DANH MỤC SẢN PHẨM</Typography>
             <ul className={classes.menu}>
-                <Typography
-                    className={classes.item}
-                    variant="body2"
-                    onClick={handleCategoryClickAll}
-                >
-                    Tất cả sản phẩm
-                </Typography>
                 {categoriesList.map((category) => (
                     <li
                         className={classes.item}

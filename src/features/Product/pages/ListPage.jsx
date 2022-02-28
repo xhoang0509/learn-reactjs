@@ -3,6 +3,7 @@ import { makeStyles } from '@mui/styles';
 import { Box } from '@mui/system';
 import productApi from 'api/productApi';
 import React, { useEffect, useState } from 'react';
+import FilterViewer from '../components/FilterViewer';
 import ProductFilters from '../components/ProductFilters';
 import ProductList from '../components/ProductList';
 import ProductSkeleton from '../components/ProductSkeleton';
@@ -63,6 +64,10 @@ function ListPage(props) {
         setFilters((prevFilters) => ({ ...prevFilters, ...newFiltersValue }));
     };
 
+    const setNewFilter = (newFilters) => {
+        setFilters(newFilters);
+    };
+    console.log('filters ', filters);
     return (
         <Box>
             <Container>
@@ -75,6 +80,7 @@ function ListPage(props) {
                     <Grid item className={classes.right}>
                         <Paper elevation={0}>
                             <ProductSort currentSort={filters._sort} onChange={handleSortChange} />
+                            <FilterViewer filters={filters} onChange={setNewFilter} />
                             {loading ? (
                                 <ProductSkeleton length={9} />
                             ) : (

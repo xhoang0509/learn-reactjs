@@ -31,33 +31,35 @@ function FilterByPrice({ filters = {}, onChange }) {
 
     const handleChange = (e) => {
         if (!onChange) return;
-
         const { name, checked } = e.target;
         const newFilters = { [name]: checked };
         onChange(newFilters);
-        console.log(newFilters);
     };
 
     return (
         <Box className={classes.root}>
             <Typography variant="subtitle2">DỊCH VỤ</Typography>
 
-            <FormGroup>
+            <ul className={classes.list}>
                 {[
-                    { value: 'isPromotion', label: 'Giảm giá' },
-                    { value: 'isFreeShip', label: 'Miễn phí vận chuyển' },
+                    { value: 'isPromotion', label: 'Có khuyến mãi' },
+                    { value: 'isFreeShip', label: 'Giao hàng miễn phí' },
                 ].map((service) => (
-                    <FormControlLabel
-                        key={service.value}
-                        name={service.value}
-                        onChange={handleChange}
-                        checked={filters[service.value]}
-                        value={service.value}
-                        control={<Checkbox />}
-                        label={service.label}
-                    />
+                    <li key={service.value}>
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    checked={Boolean(filters[service.value])}
+                                    onChange={handleChange}
+                                    name={service.value}
+                                    color="primary"
+                                />
+                            }
+                            label={service.label}
+                        />
+                    </li>
                 ))}
-            </FormGroup>
+            </ul>
         </Box>
     );
 }

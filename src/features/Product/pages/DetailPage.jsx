@@ -3,6 +3,7 @@ import { makeStyles } from '@mui/styles';
 import { Box } from '@mui/system';
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import AddToCartForm from '../components/AddToCartForm';
 import ProductInfo from '../components/ProductInfo';
 import ProductThumbnail from '../components/ProductThumbnail';
 import useProductDetail from '../hooks/useProductDetail';
@@ -30,6 +31,10 @@ function DetailPage() {
 
     const { product, loading } = useProductDetail(productId);
 
+    const handleAddToCartSubmit = (formValues) => {
+        console.log('form values: ', formValues);
+    };
+
     if (loading) {
         return <Box>Loading...</Box>;
     }
@@ -44,6 +49,7 @@ function DetailPage() {
                         </Grid>
                         <Grid item className={classes.right}>
                             <ProductInfo product={product} />
+                            <AddToCartForm onSubmit={handleAddToCartSubmit} />
                         </Grid>
                     </Grid>
                 </Paper>

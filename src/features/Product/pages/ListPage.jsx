@@ -2,7 +2,9 @@ import { Container, Grid, Pagination, Paper } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { Box } from '@mui/system';
 import productApi from 'api/productApi';
-import React, { useEffect, useState } from 'react';
+import queryString from 'query-string';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import FilterViewer from '../components/FilterViewer';
 import ProductFilters from '../components/ProductFilters';
 import ProductList from '../components/ProductList';
@@ -30,6 +32,19 @@ const useStyle = makeStyles(() => {
 });
 function ListPage(props) {
     const classes = useStyle();
+    let navigate = useNavigate();
+    const location = useLocation();
+    const queryParams = useMemo(() => {
+        const params = queryString.parse(location.search);
+        return {
+            ...params,
+            _page: Number.parseInt(params._page) || 1,
+            _limit: Number.parseInt(params._limit) || 9,
+            _sort: params._sort || 'salePrice:ASC',
+            isPromotion: params.isPromotion ? 'true' : null,
+            isFreeShip: params.isFreeShip ? 'true' : null,
+        };
+    }, [location.search]);
 
     const [productList, setProductList] = useState([]);
     const [pagination, setPagination] = useState({
@@ -38,12 +53,23 @@ function ListPage(props) {
         total: 120,
     });
     const [loading, setLoading] = useState(true);
-    const [filters, setFilters] = useState({ _page: 1, _limit: 9, _sort: 'salePrice:ASC' });
+    // const [filters, setFilters] = useState(() => ({
+    //     ...queryParams,
+    //     _page: Number.parseInt(queryParams._page) || 1,
+    //     _limit: Number.parseInt(queryParams._limit) || 9,
+    //     _sort: queryParams._sort || 'salePrice:ASC',
+    // }));
+
+    // useEffect(() => {
+    //     navigate({
+    //         search: queryString.stringify(filters),
+    //     });
+    // }, [filters]);
 
     useEffect(() => {
         (async () => {
             try {
-                const { data, pagination } = await productApi.getAll(filters);
+                const { data, pagination } = await productApi.getAll(queryParams);
                 setProductList(data);
                 setPagination(pagination);
             } catch (error) {
@@ -51,36 +77,53 @@ function ListPage(props) {
             }
             setLoading(false);
         })();
-    }, [filters]);
+    }, [queryParams]);
 
     const handlePageChange = (e, page) => {
-        setFilters((prevFilters) => ({ ...prevFilters, _page: page }));
+        // setFilters((prevFilters) => ({ ...prevFilters, _page: page }));
+        const filters = { ...queryParams, _page: page };
+        navigate({
+            search: queryString.stringify(filters),
+        });
     };
 
     const handleSortChange = (newSortValue) => {
-        setFilters((prevFilters) => ({ ...prevFilters, _sort: newSortValue }));
+        // setFilters((prevFilters) => ({ ...prevFilters, _sort: newSortValue }));
+        const filters = { ...queryParams, _sort: newSortValue };
+        navigate({
+            search: queryString.stringify(filters),
+        });
     };
     const handleFiltersChange = (newFiltersValue) => {
-        setFilters((prevFilters) => ({ ...prevFilters, ...newFiltersValue }));
+        // setFilters((prevFilters) => ({ ...prevFilters, ...newFiltersValue }));
+        const filters = { ...queryParams, ...newFiltersValue };
+        navigate({
+            search: queryString.stringify(filters),
+        });
     };
 
     const setNewFilter = (newFilters) => {
-        setFilters(newFilters);
+        navigate({
+            search: queryString.stringify(newFilters),
+        });
     };
-    console.log('filters ', filters);
+
     return (
         <Box>
             <Container>
                 <Grid container spacing={1}>
                     <Grid item className={classes.left}>
                         <Paper elevation={0}>
-                            <ProductFilters filters={filters} onChange={handleFiltersChange} />
+                            <ProductFilters filters={queryParams} onChange={handleFiltersChange} />
                         </Paper>
                     </Grid>
                     <Grid item className={classes.right}>
                         <Paper elevation={0}>
-                            <ProductSort currentSort={filters._sort} onChange={handleSortChange} />
-                            <FilterViewer filters={filters} onChange={setNewFilter} />
+                            <ProductSort
+                                currentSort={queryParams._sort}
+                                onChange={handleSortChange}
+                            />
+                            <FilterViewer filters={queryParams} onChange={setNewFilter} />
                             {loading ? (
                                 <ProductSkeleton length={9} />
                             ) : (

@@ -9,15 +9,17 @@ import TodoForm from './pages/TodoForm';
 TodoFeature.propTypes = {};
 const initTodoList = JSON.parse(localStorage.getItem('todo-list')) || [];
 
-function TodoFeature() {
-    const [todoList, setTodoList] = useState(() => initTodoList);
-
+function TodoFeature() {    
     const location = useLocation();
     let navigate = useNavigate();
+    
+    const [todoList, setTodoList] = useState(() => initTodoList);
+
     const [filteredStatus, setFilteredStatus] = useState(() => {
         const params = queryString.parse(location.search);
         return params.status || 'all';
     });
+
     useEffect(() => {
         const params = queryString.parse(location.search);
         setFilteredStatus(params.status || 'all');

@@ -12,7 +12,7 @@ import ProductSkeleton from '../components/ProductSkeleton';
 import ProductSort from '../components/ProductSort';
 
 ListPage.propTypes = {};
-const useStyle = makeStyles(() => {
+const useStyles = makeStyles(() => {
     return {
         root: {},
         left: {
@@ -31,8 +31,8 @@ const useStyle = makeStyles(() => {
     };
 });
 function ListPage(props) {
-    const classes = useStyle();
-    let navigate = useNavigate();
+    const classes = useStyles();
+    const navigate = useNavigate();
     const location = useLocation();
     const queryParams = useMemo(() => {
         const params = queryString.parse(location.search);
@@ -97,6 +97,7 @@ function ListPage(props) {
     const handleFiltersChange = (newFiltersValue) => {
         // setFilters((prevFilters) => ({ ...prevFilters, ...newFiltersValue }));
         const filters = { ...queryParams, ...newFiltersValue };
+        console.log(filters);
         navigate({
             search: queryString.stringify(filters),
         });

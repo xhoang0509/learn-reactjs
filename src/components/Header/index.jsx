@@ -101,16 +101,16 @@ const Header = () => {
                             </Link>
                         </Typography>
 
-                        <NavLink className={classes.link} to="/todo">
+                        <NavLink className={classes.link} to="todo">
                             <Button color="inherit">Todos</Button>
                         </NavLink>
-                        <NavLink className={classes.link} to="/album">
+                        <NavLink className={classes.link} to="album">
                             <Button color="inherit">Album</Button>
                         </NavLink>
-                        <NavLink className={classes.link} to="/counter">
+                        <NavLink className={classes.link} to="counter">
                             <Button color="inherit">Counter</Button>
                         </NavLink>
-                        <NavLink className={classes.link} to="/product">
+                        <NavLink className={classes.link} to="product">
                             <Button color="inherit">Product</Button>
                         </NavLink>
                         {!isLoggedIn && (

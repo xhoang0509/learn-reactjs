@@ -31,8 +31,13 @@ function FilterByPrice({ filters = {}, onChange }) {
 
     const handleChange = (e) => {
         if (!onChange) return;
+
         const { name, checked } = e.target;
         const newFilters = { [name]: checked };
+
+        // if (newFilters[name] === false) {
+        //     delete newFilters[name];
+        // }
         onChange(newFilters);
     };
 

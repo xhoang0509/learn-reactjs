@@ -26,7 +26,7 @@ ReactDOM.render(
                         horizontal: 'right',
                         top: '100px',
                     }}
-                    autoHideDuration={150000}
+                    autoHideDuration={1500}
                     classeName={{ styles }}
                 >
                     <App />

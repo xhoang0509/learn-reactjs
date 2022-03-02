@@ -1,15 +1,15 @@
 import { Close } from '@mui/icons-material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ShopIcon from '@mui/icons-material/Shop';
-import { IconButton } from '@mui/material';
+import { createTheme, IconButton } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import { red } from '@mui/material/colors';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { createTheme } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { makeStyles } from '@mui/styles';
@@ -27,6 +27,10 @@ const useStyles = makeStyles(() => {
         link: {
             textDecoration: 'none',
             color: '#fff',
+            '&.active': {
+                color: red[500],
+                fontWeight: 'bold',
+            },
         },
         diaLogRoot: {
             position: 'relative',

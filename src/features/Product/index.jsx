@@ -6,12 +6,11 @@ import ListPage from './pages/ListPage';
 ProductFeature.propTypes = {};
 
 function ProductFeature() {
-    
     return (
         <Box pt={4}>
             <Routes>
                 <Route index element={<ListPage />} />
-                <Route path=":id" element={<DetailPage />} />
+                <Route path=":id/*" element={<DetailPage />} />
             </Routes>
         </Box>
     );

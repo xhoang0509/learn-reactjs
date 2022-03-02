@@ -1,3 +1,4 @@
+import CartFeature from 'features/Cart';
 import ProductFeature from 'features/Product';
 import { Route, Routes } from 'react-router-dom';
 import './App.scss';
@@ -22,6 +23,7 @@ const App = () => {
                     <Route path="album" element={<Album />} />
                     <Route path="counter" element={<Counter />} />
                     <Route path="product/*" element={<ProductFeature />} />
+                    <Route path="cart" element={<CartFeature />} />
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             </div>

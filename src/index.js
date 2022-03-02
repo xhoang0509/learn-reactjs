@@ -8,6 +8,14 @@ import store from './app/store';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 
+const styles = {
+    position: 'absolute',
+    height: 50,
+    bottom: 70,
+    left: 10,
+    backgroundColor: 'red',
+};
+
 ReactDOM.render(
     <Provider store={store}>
         <React.StrictMode>
@@ -16,8 +24,10 @@ ReactDOM.render(
                     anchorOrigin={{
                         vertical: 'top',
                         horizontal: 'right',
+                        top: '100px',
                     }}
-                    autoHideDuration={1500}
+                    autoHideDuration={150000}
+                    classeName={{ styles }}
                 >
                     <App />
                 </SnackbarProvider>

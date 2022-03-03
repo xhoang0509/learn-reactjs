@@ -17,12 +17,12 @@ const App = () => {
 
             <div className="container">
                 <Routes>
-                    <Route path="/" element={<Home />} />
+                    <Route path="/*" element={<ProductFeature />} />
+                    {/* <Route path="/" element={<Home />} /> */}
                     <Route path="todo" element={<Todo />} />
                     <Route path="todo/:todoId" element={<TodoDetail />} />
                     <Route path="album" element={<Album />} />
                     <Route path="counter" element={<Counter />} />
-                    <Route path="product/*" element={<ProductFeature />} />
                     <Route path="cart" element={<CartFeature />} />
                     <Route path="*" element={<NotFound />} />
                 </Routes>

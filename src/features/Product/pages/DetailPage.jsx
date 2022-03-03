@@ -84,7 +84,7 @@ function DetailPage() {
             <Container>
                 <Paper elevation={0}>
                     <Box className={classes.back}>
-                        <IconButton onClick={() => navigate(-1)}>
+                        <IconButton onClick={() => navigate('/')}>
                             <ArrowBackIcon />
                             Quay lại
                         </IconButton>

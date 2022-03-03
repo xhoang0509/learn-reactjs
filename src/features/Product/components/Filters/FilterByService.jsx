@@ -1,3 +1,4 @@
+import { Co2Sharp } from '@mui/icons-material';
 import { Checkbox, createTheme, FormControlLabel, FormGroup, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { Box } from '@mui/system';
@@ -26,6 +27,11 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
+const services = [
+    { value: 'isFreeShip', label: 'Giao hàng miễn phí' },
+    { value: 'isPromotion', label: 'Có khuyến mãi' },
+];
+
 function FilterByPrice({ filters = {}, onChange }) {
     const classes = useStyles();
 
@@ -33,11 +39,11 @@ function FilterByPrice({ filters = {}, onChange }) {
         if (!onChange) return;
 
         const { name, checked } = e.target;
-        const newFilters = { [name]: checked };
-
-        // if (newFilters[name] === false) {
-        //     delete newFilters[name];
-        // }
+        let newFilters = { [name]: checked };
+        if (checked === false) {
+            newFilters = { [name]: null };
+        }
+        console.log(newFilters);
         onChange(newFilters);
     };
 
@@ -46,10 +52,7 @@ function FilterByPrice({ filters = {}, onChange }) {
             <Typography variant="subtitle2">DỊCH VỤ</Typography>
 
             <ul className={classes.list}>
-                {[
-                    { value: 'isPromotion', label: 'Có khuyến mãi' },
-                    { value: 'isFreeShip', label: 'Giao hàng miễn phí' },
-                ].map((service) => (
+                {services.map((service) => (
                     <li key={service.value}>
                         <FormControlLabel
                             control={

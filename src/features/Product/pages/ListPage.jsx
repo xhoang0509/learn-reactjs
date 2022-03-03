@@ -97,7 +97,7 @@ function ListPage(props) {
     const handleFiltersChange = (newFiltersValue) => {
         // setFilters((prevFilters) => ({ ...prevFilters, ...newFiltersValue }));
         const filters = { ...queryParams, ...newFiltersValue };
-        console.log(filters);
+        // console.log(filters);
         navigate({
             search: queryString.stringify(filters),
         });
